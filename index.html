@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<title>機車道路安全 Edge AI 辨識系統</title>
+<style>
+  body {margin:0; font-family:Arial,Helvetica,sans-serif; background:#f5f5f5; color:#333; display:flex; justify-content:center; align-items:center; min-height:100vh;}
+  .slides {display:flex; flex-direction:column; width:90%; max-width:800px; background:#fff; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.1); overflow:hidden;}
+  .slide {display:none; flex-direction:column; justify-content:center; align-items:center; text-align:center; padding:30px; box-sizing:border-box;}
+  .slide.active {display:flex;}
+  .title {font-size:1.8rem; margin-bottom:1rem; color:#222;}
+  .content {font-size:1.1rem; line-height:1.6; max-width:90%;}
+  table {width:100%; border-collapse:collapse; margin:1rem 0;}
+  th, td {border:1px solid #ddd; padding:8px; text-align:left;}
+  th {background:#f0f0f0;}
+  strong {font-weight:bold;}
+  .nav-btn {margin-top:20px; padding:10px 20px; font-size:1rem; cursor:pointer; border:none; border-radius:6px; background:#0066cc; color:#fff;}
+  .nav-btn.prev {background:#004999;}
+  .nav-btn.next {background:#0066cc;}
+  .nav-btn:disabled {background:#aaa; cursor:not-allowed;}
+  @media (max-width:600px) {
+    .title {font-size:1.5rem;}
+    .content {font-size:1rem;}
+  }
+</style>
+</head>
+<body>
+<div class="slides">
+  <article class="slide active" id="slide1">
+    <h2 class="title">🏍️ 機車道路安全 Edge AI 辨識系統 — 4 頁極簡教學簡報</h2>
+    <p class="content"><strong>受眾：完全沒碰過 AI 的初學者</strong><br>
+    <strong>風格：生活化比喻、白話文、重點加粗、可直接拿去做投影片</strong></p>
+
+    <h3>第 1 頁：什麼是邊緣 AI？ — 把「大腦」裝進你的安全帽</h3>
+
+    <table>
+      <tr><th>概念</th><th>生活比喻</th><th>一句話重點</th></tr>
+      <tr><td>雲端 AI</td><td>把路況影片拍下來 → 傳給遠端超級電腦分析 → 等回傳結果</td><td>「打電話問專家」，有網路才能用、有延遲</td></tr>
+      <tr><td>邊緣 AI</td><td>你的手機/車機自己就有個小腦袋，現場看現場懂</td><td>「隨身帶專家」，離線、即時、隱私不出門</td></tr>
+    </table>
+
+    <ul>
+      <li><strong>為什麼機車安全必須是 Edge AI？</strong>
+        <ul>
+          <li>🚦 <strong>0.1 秒生死時速</strong>：前方斑馬線、紅燈或切車，雲端還來不及。</li>
+          <li>📶 <strong>無訊號地區（隧道、山路、地下道）</strong>：邊緣 AI 仍然能工作。</li>
+          <li>🔒 <strong>影像不上傳</strong>，隱私零風險。</li>
+        </ul>
+      </li>
+    </ul>
+
+    <p><em>金句：<strong>Edge AI = 把偵測模型壓縮到手機大小，隨時隨地當你的第二雙眼睛。</strong></em></p>
+
+    <button class="nav-btn prev" disabled>←</button>
+    <button class="nav-btn next">→</button>
+  </article>
+
+  <article class="slide" id="slide2">
+    <h2 class="title">第 2 頁：資料標註與模型訓練 — 教 AI 辨認「路況字母表」</h2>
+
+    <h4>步驟 1：收集「教科書」——多樣化照片</h4>
+    <ul>
+      <li>日間 / 夜間 / 雨天 / 陰影 / 強光</li>
+      <li><em>比喻：</em>讓學生看遍各種字體寫法，避免把「斑馬線」誤認成裂縫。</li>
+    </ul>
+
+    <h4>步驟 2：在 CVAT 平台上「圈圈畫畫」——多類別標註</h4>
+    <table>
+      <tr><th>標註項目</th><th>圖框顏色</th><th>關鍵細節</th></tr>
+      <tr><td>🛵 機車騎士</td><td>紅框</td><td>含乘客、載貨、側身</td></tr>
+      <tr><td>🦓 斑馬線</td><td>白框</td><td>磨損、樹蔭、濕地反光</td></tr>
+      <tr><td>🚦 號誌燈</td><td>綠/紅/黃框</td><td>倒數計時、閃爍、遮擋</td></tr>
+    </table>
+
+    <p>工具鏈：用 Docker 一鍵把團隊的標註匯出成 YOLO 格式（簡單的圖像標記標準）。</p>
+
+    <h4>步驟 3：訓練一款「極速畢業生」模型</h4>
+    <ul>
+      <li>使用 <strong>YOLOv8n</strong>（一個非常輕量版），只佔全功能版本的 1/10 參數，但仍能 <strong>即時偵測</strong>。</li>
+      <li>目標：<strong>mAP@0.5 > 0.9</strong>（十張圖九張以上正確框出）。</li>
+      <li><em>比喻：</em>像換掉一本巨大的圖書館，考試仍考第一名。</li>
+    </ul>
+
+    <button class="nav-btn prev">←</button>
+    <button class="nav-btn next">→</button>
+  </article>
+
+  <article class="slide" id="slide3">
+    <h2 class="title">第 3 頁：模型瘦身與手機整合 — 讓大腦塞進口袋</h2>
+
+    <h4>1️⃣ 量化（把「浮點數精算師」變成「整數會計師」）</h4>
+    <table>
+      <tr><th>階段</th><th>檔案</th><th>大小</th><th>速度提升</th><th>精度損失</th></tr>
+      <tr><td>訓練完成</td><td>PyTorch .pt</td><td>~6 MB</td><td>基準</td><td>0%</td></tr>
+      <tr><td>匯出</td><td>TensorFlow Lite .tflite (FP16)</td><td>~3 MB</td><td>↑ 1.5×</td><td>< 0.5%</td></tr>
+      <tr><td><strong>量化後</strong></td><td><strong>LiteRT / TFLite INT8</strong></td><td><strong>~1.5 MB</strong></td><td><strong>↑ 3–4×</strong></td><td><strong>< 1%</strong></td></tr>
+    </table>
+
+    <p><em>白話：原本模型算 0.7321 × 0.9999，現在改算 73 × 100，<strong>快 4 倍、小 4 倍、眼神差不到 1%</strong>。</em></p>
+
+    <h4>2️⃣ Android CameraX — 「相機管家」幫你餵資料</h4>
+    <pre><code>val analyzer = ImageAnalysis.Builder()
+    .setTargetResolution(Size(640, 640))   // YOLO 喜歡正方形
+    .setBackpressureStrategy(STRATEGY_KEEP_ONLY_LATEST) // 只處理最新畫面，不卡頓
+    .build()
+analyzer.setAnalyzer(cameraExecutor) { imageProxy ->
+    detector.detect(imageProxy)   // 推論
+    imageProxy.close()            // 釋放緩衝區
+}</code></pre>
+
+    <p><strong>關鍵：</strong> <code>STRATEGY_KEEP_ONLY_LATEST</code> = <strong>永遠只看最新一幀</strong>，舊畫面直接丟，手機不會發燙卡頓。</p>
+
+    <h4>3️⃣ 雙執行緒架構 — 分工不搶路</h4>
+    <table>
+      <tr><th>執行緒</th><th>負責</th><th>輸入</th><th>產出</th><th>比喻</th></tr>
+      <tr><td>Thread A</td><td>靜態標線</td><td>每 3–5 幀 1 次</td><td>斑馬線、停止線、車道線多邊形</td><td>「路況地圖繪製師」：慢工出細活</td></tr>
+      <tr><td>Thread B</td><td>動態物件</td><td>每幀跑</td><td>機車、行人、車輛 BBox + ID</td><td>「動態雷達兵」：眼快手快</td></tr>
+    </table>
+
+    <p><strong>成果：</strong> 單核手機也能穩定 <strong>≥ 30 FPS</strong>，Thread A 不拖慢 Thread B，<strong>紅燈前車輛不漏框、斑馬線不斷線</strong>。</p>
+
+    <button class="nav-btn prev">←</button>
+    <button class="nav-btn next">→</button>
+  </article>
+
+  <article class="slide" id="slide4">
+    <h2 class="title">第 4 頁：實際應用場景 — 從實驗室到你的把手</h2>
+
+    <h4>場景與 Edge AI 怎麼幫忙</h4>
+    <table>
+      <tr><th>場景</th><th>Edge AI 怎麼幫忙</th><th>使用者體驗</th></tr>
+      <tr><td>🚦 紅燈倒數 + 斑馬線預警</td><td>Thread B 偵測紅燈倒數 + Thread A 確認斑馬線位置</td><td>📢 語音/震動：「前方 30 公尺斑馬線，紅燈倒數 5 秒，請減速」</td></tr>
+      <tr><td>🛵 切車/並排偵測</td><td>Thread B 追蹤多物件 + 判斷軌跡重疊</td><td>⚠️ 鏡頭邊框閃紅 + 耳機「左側有車併入」</td></tr>
+      <tr><td>🌧️ 夜間雨天視線不佳</td><td>INT8 模型抗噪強、不需網路</td><td>🌙 離線也能辨識，不怕山區無訊號</td></tr>
+      <tr><td>📊 騎乘報表</td><td>本地統計：剎車次數、超速、違規</td><td>📈 App 產生每日安全分數，保險費打折憑證</td></tr>
+    </table>
+
+    <h4>部署檢查清單（給工程師）</h4>
+    <ul>
+      <li>放入 <code>assets/</code> 目錄：<code>.tflite</code> + <code>labelmap.txt</code></li>
+      <li>設定 Android <code>minSdk 24</code>、開啟 <code>hardwareAccelerated="true"</code></li>
+      <li>測試機型：入門機（Helio G85）至少跑 25 FPS</li>
+      <li>電量測試：連續推論 1 小時電量下降 < 10%</li>
+    </ul>
+
+    <h4>給初學者的三個帶走重點</h4>
+    <ol>
+      <li><strong>Edge AI = 離線即時，安全不靠網路</strong></li>
+      <li><strong>標註好資料 > 搞複雜模型</strong> —— CVAT 圈框最重要</li>
+      <li><strong>量化 + 雙執行緒 = 讓便宜手機也能當 AI 護駕</strong></li>
+    </ol>
+
+    <p><em>下一步行動：掃碼下載 Demo APK → 戴上安全帽 → 親自騎一圈，感受「口袋裡的 AI 眼睛」！ 🏁</em></p>
+
+    <button class="nav-btn prev">←</button>
+    <button class="nav-btn next" disabled>→</button>
+  </article>
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  let current = 0;
+
+  const prevBtn = document.querySelector('.nav-btn.prev');
+  const nextBtn = document.querySelector('.nav-btn.next');
+
+  function showSlide(index) {
+    slides.forEach((s, i) => s.classList.toggle('active', i === index));
+    prevBtn.disabled = index === 0;
+    nextBtn.disabled = index === slides.length - 1;
+  }
+
+  prevBtn.addEventListener('click', () => {
+    if (current > 0) {
+      current--;
+      showSlide(current);
+    }
+  });
+
+  nextBtn.addEventListener('click', () => {
+    if (current < slides.length - 1) {
+      current++;
+      showSlide(current);
+    }
+  });
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight') {
+      if (current < slides.length - 1) {
+        current++;
+        showSlide(current);
+      }
+    } else if (e.key === 'ArrowLeft') {
+      if (current > 0) {
+        current--;
+        showSlide(current);
+      }
+    }
+  });
+</script>
+</body>
+</html>
